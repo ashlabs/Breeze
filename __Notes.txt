@@ -1,0 +1,64 @@
+ApiDocs
+    Open Command Prompt from Breeze.Client\Scripts\IBlade 
+    Run
+        yuidoc -t "C:\Subversion\Breeze\apidoc-theme\breeze" .
+
+Semantic Versioning:
+    see: http://semver.org/
+
+Conventions:
+    properties are nouns or begin with 'is' and are ALL readOnly. Setting a property is forbidden.
+        if a property is conceptually settable the will be a setProperties method that takes a config object.
+    methods are verbs.
+    niladic methods are used instead of properties where either:
+        1) the operation can return different results over the life of the object based on a change other than by a setter.
+        2) the result is time consuming to calculate or the storage cost per item is deemed greater than the 
+
+Todo:
+	1) Make all fromJSON methods - internal
+	2) Make all EntityGroup refs internal
+	4) Insure that a server query for a resourceName that is not in metadata i.e. "CustomerAndOrders", adds to the client side resourceName map when it returns.
+	5) Rewrite unwrapEntities - ko version is very SLOW
+	11) the validateOn switches exist but are not yet plumbed.
+        - validateOnAttach
+        - validateOnQuery
+        - validateOnSave
+        - validateOnPropertyChange - done
+	12) Document navigation property arrays - not sure where???
+    13) Add tests for fixup cleanup after a RejectChanges call.
+	
+Think about:
+	1) Adding AndWhere and OrWhere methods to EntityQuery
+	2) Standard method for documenting an 'interface' i.e. entityTracking or remoteAccess
+    4) Think about IsNull query operator - not sure how to express in Odata.
+    6) Think about subclassing and extending simple datatypes.
+    7) allowing case insensitive prop names anywhere you would otherwise HAVE to throw an exception
+    8) orig value check on set to revert isModified if changing a value back to its original value
+    9) ability to suppress events during query and save or whenever.
+    10) Isolating Ajax from RemoteAccess api
+      
+
+
+Missing features:
+    2) Inheritence
+    3) Complex types
+    5) support for queries with projections - Odata - select
+    6) Entity state change notification - (in DevForce this is EntityAspect.OnEntityAspectPropertyChanged.)
+        - thinking about just adding a flag to the propertyChanged args - isAspectProperty
+    7) EntityManager  events - 
+        queryCompleted - args: { query, entities } 
+        saveCompleted - args: { entities, fixupMap }
+    8) Null Entity semantics
+    9) check unidirectional navigation
+    10) Cascade deletes - client side ( + metadata)
+    11) Many-Many relations
+
+Misc Notes:
+    1) entityType is on the entity instead of the entityAspect because it is actually on the prototype and is shared by all instances of the type.
+    2) Look at knockout js - valueHasMutated for perf.
+    4) odata skip will fail against a EF source without an orderBy
+    5) id fixup cannot occur with unidirectional navigation
+    6) Decided to omit having a 'SetAdded' method. Calling SetAdded on entity with 'identity' key and then saving will 
+       create a new entity and will return it in 'unchanged' state and leave original in its 'added' state. 
+
+
