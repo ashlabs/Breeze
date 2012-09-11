@@ -795,8 +795,8 @@ function (core, m_entityMetadata, m_entityAspect, m_entityQuery, KeyGenerator) {
             // are referenced are also in the partial save group
 
             // HACK: need to put it in an array because top level JArray seems to serialize fine but JObject has problems.
-            var saveBundle = [{ entities: unwrapEntities(entitiesToSave), saveOptions: saveOptions}];
-            // var saveBundleStringified = stringifySaveBundle(saveBundle);
+            // var saveBundle = [{ entities: unwrapEntities(entitiesToSave), saveOptions: saveOptions}];
+            var saveBundle = { entities: unwrapEntities(entitiesToSave), saveOptions: saveOptions};
             var saveBundleStringified = JSON.stringify(saveBundle);
 
             var deferred = Q.defer();
